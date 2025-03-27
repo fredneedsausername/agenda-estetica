@@ -31,12 +31,32 @@ function addOperators() {
 }
 
 function setupDatePicker() {
+    // Define Italian locale for DatePicker
+    const localeIta = {
+        titles: {
+            DD: 'Giorno',
+            D: 'Giorno',
+            MM: 'Mese',
+            M: 'Mese',
+            YYYY: 'Anno',
+            YY: 'Anno'
+        },
+        titleFormat: function(type) {
+            return this.titles[type];
+        },
+        days: ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'],
+        months: ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu', 'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic']
+    };
+
+    // Register the locale
+    tui.DatePicker.localeTexts['it'] = localeIta;
+    
     // Get the date display element
     const giornoDisplay = document.getElementById('giorno-display');
     
     // Set initial date display
     const today = new Date();
-    giornoDisplay.textContent = today.toLocaleDateString();
+    giornoDisplay.textContent = today.toLocaleDateString('it-IT');
     
     // Create a wrapper div for the date picker
     const wrapperEl = document.createElement('div');
@@ -59,15 +79,14 @@ function setupDatePicker() {
     inputEl.id = 'datepicker-input';
     wrapperEl.appendChild(inputEl);
     
-    // Initialize the DatePicker with the input
+    // Initialize the DatePicker with proper format
     const datePicker = new tui.DatePicker(wrapperEl, {
         date: today,
         input: {
             element: inputEl,
-            format: 'yyyy-MM-dd'
+            format: 'dd/MM/yyyy' // Correct format for Italian dates
         },
-        type: 'date',
-        language: 'ru',
+        language: 'it',
         usageStatistics: false
     });
 
@@ -75,38 +94,22 @@ function setupDatePicker() {
     
     giornoContainer.addEventListener('click', function(e) {
         e.stopPropagation();
-        console.log('Giorno container clicked, making wrapper visible...');
-        wrapperEl.style.display = 'block'; // Make the container div visible
-        try {
-             datePicker.open();
-             console.log('Called datePicker.open()');
-        } catch (openError) {
-             console.error('Error calling datePicker.open():', openError);
-        }
+        wrapperEl.style.display = 'block';
     });
 
     // Update the display when a date is selected
     datePicker.on('change', function() {
         const selectedDate = datePicker.getDate();
-        console.log('Date changed:', selectedDate);
-        giornoDisplay.textContent = selectedDate.toLocaleDateString('it-IT'); // Use locale if using 'it'
-        // giornoDisplay.textContent = selectedDate.toLocaleDateString(); // Use default if using 'en'
-        wrapperEl.style.display = 'none'; // Hide container after selection
-        // datePicker.close(); // You might also need to call close explicitly
+        giornoDisplay.textContent = selectedDate.toLocaleDateString('it-IT');
+        wrapperEl.style.display = 'none';
     });
-    
-    // Add a close button
     
     // Close the date picker when clicking outside
     document.addEventListener('click', function(e) {
         if (wrapperEl.style.display === 'block' && 
             !wrapperEl.contains(e.target) && 
-            e.target.id !== 'giorno-display' &&
-            !document.getElementById('giorno-container').contains(e.target)) {
+            !giornoContainer.contains(e.target)) {
             wrapperEl.style.display = 'none';
         }
     });
-    
-    // Debug information to console
-    console.log('DatePicker initialized:', datePicker);
 }
