@@ -1,0 +1,11 @@
+- AGGIORNA DATABASE CONNECTIONS PER FAR Sì CHE LOGGI LE ECCEZIONI COME SU ACCA
+
+- aggiustare fredauth
+- creare indici per il db
+- implementare login
+- implementare autenticazione
+- pensare layout grafico
+- aggiungere connessioni massime a db mysql sul server
+- considera cosa succede se il cliente a cui mandi il messaggio via whatsapp non ha whatsapp
+- aggiungi un servizio al server per far sì che l'agenda si avvii in automatico quando si avvia il server
+- aggiungi crash log ad agenda

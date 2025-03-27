@@ -1,0 +1,22 @@
+I need a way to write a flask web application that runs on phone, that can schedule messages to be sent automatically when an appointment is near
+
+bisogna chiedere il permesso a meta per far usare l'api
+
+usare il server ionos già pagato
+
+O compri una nuova sim e usi un telefono per attivarla o usi un BSP
+
+per mettere la carta in
+
+con meta api:
+    - €0.0248 per conversazione (copre tutti i messaggi nell'arco di 24 ore) (cambia a partire dal 1 aprile 2025)
+    - Per 1000 conversazioni si paga €24.8
+    - con €99.9936 si pagano 4032 conversazioni
+    - con €1 si pagano circa 40 conversazioni
+
+con twilio:
+    - Per 1000 conversazioni si pagano €35
+    - €30 al mese per la sim virtuale
+
+per mettere la chiavetta in standby, guarda qui: https://developers.telnyx.com/api/wireless/set-sim-card-standby dopo aver trovato
+l'id della carta sim facendo come scritto qui https://developers.telnyx.com/api/wireless/get-sim-cards

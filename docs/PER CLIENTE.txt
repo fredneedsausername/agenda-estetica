@@ -1,0 +1,27 @@
+PER CLIENTE:
+    - Passaggi necessari:
+        - Il numero di telefono sarà dissociato dal suo account, in conformità al
+        funzionamento dell'API di WhatsApp. Questo comporta creare un nuovo numero
+        da cui mandare i messaggi automatizzati.
+        - Per attivare un nuovo account WhatsApp, è necessario acquistare una SIM
+        o eSIM e mantenerne l’attivazione per prevenire la ri-assegnazione del
+        numero, garantendo così la sicurezza dell'account.
+    - Modalità di accesso:
+        - Il software sarà una web application accessibile da multipli dispositivi
+    - Costi:
+        - SIM:
+            - Usando sonetel, provider di eSIM:
+                senza
+                - Piano mensile:
+                    €2.99 + IVA al mese
+                - Piano annuale:
+                    €2.69 + IVA al mese
+                - Piano triennale:
+                    €2.29 + IVA al mese
+        - Messaggi:
+            - Fino al 1 aprile 2025:
+                - con €1 si pagano circa 40 messaggi
+                - con €25 si pagano 1000 messaggi
+            - Dopo 1 aprile 2025:
+                - non ci sono dati
+                - costi probabilmente minori rispetto a quelli fino al 1 aprile

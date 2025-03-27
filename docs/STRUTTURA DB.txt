@@ -1,0 +1,66 @@
+DATABASE MARGHERITA ESTETICA
+
+-- Creazione del database con supporto per utf8mb4 (emoji, caratteri russi e ucraini)
+CREATE DATABASE IF NOT EXISTS mydatabase
+  DEFAULT CHARACTER SET utf8mb4
+  DEFAULT COLLATE utf8mb4_unicode_ci;
+
+USE mydatabase;
+
+-- Tabella "postazione"
+CREATE TABLE IF NOT EXISTS postazione (
+    id VARCHAR(3) NOT NULL,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+-- Tabella "ruolo"
+CREATE TABLE IF NOT EXISTS ruolo (
+    id INT AUTO_INCREMENT NOT NULL,
+    nome VARCHAR(50) NOT NULL,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+-- Tabella "utente"
+CREATE TABLE IF NOT EXISTS utente (
+    id INT AUTO_INCREMENT NOT NULL,
+    nome VARCHAR(30) NOT NULL,
+    id_ruolo INT NOT NULL,
+    password VARCHAR(30) NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_utente_ruolo FOREIGN KEY (id_ruolo) REFERENCES ruolo(id)
+) ENGINE=InnoDB;
+
+-- Tabella "cliente"
+CREATE TABLE IF NOT EXISTS cliente (
+    id INT AUTO_INCREMENT NOT NULL,
+    nome VARCHAR(30),
+    cognome VARCHAR(30),
+    data_nascita DATE,
+    note VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+-- Tabella "servizio"
+CREATE TABLE IF NOT EXISTS servizio (
+    id INT AUTO_INCREMENT NOT NULL,
+    nome VARCHAR(255),
+    PRIMARY KEY (id),
+    CONSTRAINT fk_servizio_postazione FOREIGN KEY (id_postazione) REFERENCES postazione(id)
+) ENGINE=InnoDB;
+
+-- Tabella "appuntamento"
+CREATE TABLE IF NOT EXISTS appuntamento (
+    id INT AUTO_INCREMENT NOT NULL,
+    id_servizio INT NOT NULL,
+    id_cliente INT NOT NULL,
+    id_operatore INT NOT NULL,
+    id_postazione VARCHAR(3) NOT NULL,
+    ora_inizio TIME NOT NULL,
+    ora_fine TIME,
+    prezzo DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_appuntamento_servizio FOREIGN KEY (id_servizio) REFERENCES servizio(id),
+    CONSTRAINT fk_appuntamento_cliente FOREIGN KEY (id_cliente) REFERENCES cliente(id),
+    CONSTRAINT fk_appuntamento_operatore FOREIGN KEY (id_operatore) REFERENCES utente(id),
+    CONSTRAINT fk_appuntamento_postazione FOREIGN KEY (id_postazione) REFERENCES postazione(id)
+) ENGINE=InnoDB;

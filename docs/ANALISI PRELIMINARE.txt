@@ -1,0 +1,16 @@
+ANALISI PRELIMINARE
+
+- Sostituire agenda cartacea con agenda digitale su qualsiasi dispositivo (tablet, telefono, pc) soprattutto tablet e telefono
+- Inserire dati della persona (data di nascita, trattamenti che preferisce, fascia economica, dati vari):
+    - classe sociale:
+        - 0-5 stelle o buco nero se è una che non paga mai
+- Fino a 7 posti di lavoro
+- al compleanno messaggio con auguri e promozione
+- messaggio quando un appuntamento è preso per assicurarsi che tutti sono sulla stessa barca e per poterlo rivedere in caso di problemi
+- messaggio 24 ore prima dell'appuntamento per evitare chi annulla all'ultimo:
+    - scrivere dentro il messaggio:
+        - In caso non si presenta, deve pagare lo stesso
+- Diversi layer di autorizzazione:
+    - in particolare per:
+        - nascondere alle collaboratrici le indicazioni sullo status sociale e note personali sulle clienti
+- Palette di colori scelta dal cliente: nero su bianco

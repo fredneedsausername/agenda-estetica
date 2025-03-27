@@ -1,0 +1,83 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    font-size: 24px; /* Significantly larger base font size */
+}
+
+/* Top section with three equal elements */
+.top-section {
+    display: flex;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+}
+
+.top-element {
+    flex: 1;
+    height: 13vh;
+    padding: 1em;
+    /* Center text in all top elements */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 2rem; /* Larger font for top elements */
+    font-weight: bold;
+}
+
+.top-element:not(:last-child) {
+    border-right: 1px solid #ccc;
+}
+
+/* Scrollable section */
+.scroll-container {
+    width: 100%;
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.scroll-content {
+    display: flex;
+    height: 100%;
+}
+
+.scroll-element {
+    flex: 0 0 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #ccc;
+}
+
+.element-content {
+    height: 13vh;
+    padding: 1em;
+    /* Center text in top div of scrollable elements */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.8rem; /* Larger font for scroll element content */
+    font-weight: bold;
+}
+
+.element-empty-div {
+    height: 30%;
+    padding: 1em;
+    border-top: 1px solid #ccc;
+}
