@@ -15,13 +15,16 @@
 {% block body %}
     <!-- Top section with two equal elements -->
     <div class="top-section">
-        <div class="top-element">
-            <span>GIORNO</span>
+        <div class="top-element" id="giorno-container">
+            <span id="giorno-display">GIORNO</span>
         </div>
         <div class="top-element">
             <span>OPERATORI</span>
         </div>
     </div>
+    
+    <div id="date-picker-container" style="display: none; position: fixed; z-index: 1000;"></div>
+    
     
     <!-- Horizontally scrollable section -->
     <div class="scroll-container">
