@@ -1,20 +1,17 @@
 {% extends "base.html" %}
 
 {% block css %}
-<link rel="stylesheet" href="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.css">
-<link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css">
-<link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename = 'css/agenda.css')}}">
 {% endblock %}
 
 {% block body %}
     <!-- Top section with two equal elements -->
     <div class="top-section">
-        <div id="giorno-container" class="top-element">  <!-- This is the element giornoContainer refers to -->
-            GIORNO: <span id="giorno-display"></span> <!-- This span shows the date -->
+        <div class="top-element">
+            GIORNO
         </div>
         <div class="top-element">
-            <span>OPERATORI</span>
+            OPERATORI
         </div>
     </div>
     
@@ -27,9 +24,5 @@
 {% endblock %}
 
 {% block scripts %}
-<!-- Load scripts in correct order -->
-<script src="https://uicdn.toast.com/tui.time-picker/latest/tui-time-picker.js"></script>
-<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
-<script src="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.js"></script>
 <script src="{{ url_for('static', filename='js/agenda.js') }}"></script>
 {% endblock %}
