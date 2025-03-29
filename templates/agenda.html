@@ -1,28 +1,117 @@
 {% extends "base.html" %}
 
 {% block css %}
-<link rel="stylesheet" href="{{ url_for('static', filename = 'css/agenda.css')}}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/agenda.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/calendar.css') }}">
 {% endblock %}
 
 {% block body %}
-    <!-- Top section with two equal elements -->
+    <!-- Top section with navigation and view controls -->
     <div class="top-section">
-        <div class="top-element">
-            GIORNO
+        <div class="date-navigation">
+            <button id="prev-button" class="nav-btn">&#10094;</button>
+            <span id="current-date" class="date-display">Data</span>
+            <button id="next-button" class="nav-btn">&#10095;</button>
         </div>
-        <div class="top-element">
-            OPERATORI
+        <div class="view-controls">
+            <button id="day-view" class="view-btn active">Giorno</button>
+            <button id="week-view" class="view-btn">Settimana</button>
+            <button id="month-view" class="view-btn">Mese</button>
+            <button id="list-view" class="view-btn">Lista</button>
         </div>
     </div>
     
-    <!-- Horizontally scrollable section -->
+    <!-- Horizontally scrollable section for worker calendars -->
     <div class="scroll-container">
         <div class="scroll-content" id="scrollContent">
-            <!-- Scroll elements will be dynamically added here -->
+            <!-- Worker calendars will be dynamically added here -->
+        </div>
+    </div>
+
+    <!-- Floating action button for new appointment -->
+    <div class="fab" id="new-appointment-btn">
+        &#43;
+    </div>
+
+    <!-- Appointment Modal -->
+    <div class="modal-overlay" id="appointment-modal-overlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">Nuovo Appuntamento</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="appointment-form">
+                    <div class="form-group">
+                        <label for="appointment-client">Cliente</label>
+                        <select id="appointment-client" class="form-control" required>
+                            <option value="">Seleziona cliente</option>
+                            <!-- Client options will be populated dynamically -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="appointment-service">Servizio</label>
+                        <select id="appointment-service" class="form-control" required>
+                            <option value="">Seleziona servizio</option>
+                            <!-- Service options will be populated dynamically -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="appointment-worker">Operatore</label>
+                        <select id="appointment-worker" class="form-control" required>
+                            <option value="">Seleziona operatore</option>
+                            <!-- Worker options will be populated dynamically -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="appointment-position">Postazione</label>
+                        <select id="appointment-position" class="form-control" required>
+                            <option value="">Seleziona postazione</option>
+                            <!-- Position options will be populated dynamically -->
+                        </select>
+                    </div>
+
+                    <div class="datetime-container">
+                        <div class="form-group">
+                            <label for="appointment-start">Inizio</label>
+                            <input type="text" id="appointment-start" class="form-control datepicker" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="appointment-end">Fine</label>
+                            <input type="text" id="appointment-end" class="form-control datepicker" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="appointment-price">Prezzo</label>
+                        <input type="number" id="appointment-price" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="appointment-notes">Note</label>
+                        <textarea id="appointment-notes" class="form-control" rows="3"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="delete-appointment" class="btn btn-danger" style="display: none;">Elimina</button>
+                <button id="cancel-appointment" class="btn btn-secondary">Annulla</button>
+                <button id="save-appointment" class="btn btn-primary">Salva</button>
+            </div>
         </div>
     </div>
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/agenda.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales/it.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/it.js"></script>
+<script src="{{ url_for('static', filename='js/calendar-core.js') }}"></script>
+<script src="{{ url_for('static', filename='js/calendar-data.js') }}"></script>
 {% endblock %}
