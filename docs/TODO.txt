@@ -12,4 +12,3 @@
 - aggiungi crash log ad agenda
 - metti un limite configurabile al numero di messaggi che si possono mandare per giornata, per evitare di mandarne 5000 per un bug e spendere centinaia di euro, e fai che ti arriva una email se questo limite viene raggiunto
 - Fai il download di flatpickr e fullcalendar invece di usare cdn
-- gestisci questione licenze
