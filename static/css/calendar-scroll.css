@@ -1,0 +1,37 @@
+/**
+ * Calendar Scroll CSS
+ * Styles for synchronized vertical scrolling
+ */
+
+/* Enable vertical scrolling in calendar containers */
+.calendar-container {
+    flex: 1;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    padding: 0;
+    background-color: #fff;
+    scroll-behavior: smooth;
+}
+
+/* Ensure fullcalendar view doesn't get cut off */
+.fc-view-harness {
+    min-height: 600px;
+}
+
+/* Style scrollbars for better visibility */
+.calendar-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.calendar-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.calendar-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.calendar-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

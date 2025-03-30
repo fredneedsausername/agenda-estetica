@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/agenda.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/calendar.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/calendar-scroll.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -112,6 +113,7 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/locales/it.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/it.js"></script>
-<script src="{{ url_for('static', filename='js/calendar-core.js') }}"></script>
 <script src="{{ url_for('static', filename='js/calendar-data.js') }}"></script>
+<script src="{{ url_for('static', filename='js/calendar-core.js') }}"></script>
+<script src="{{ url_for('static', filename='js/calendar-scroll-sync.js') }}"></script>
 {% endblock %}
