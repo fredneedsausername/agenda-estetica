@@ -3,127 +3,180 @@
  * This file adds synchronized vertical scrolling to the calendar system
  */
 document.addEventListener('DOMContentLoaded', function() {
-    // Wait for CalendarManager to finish initialization
-    setTimeout(initSynchronizedScrolling, 500);
+    // Initialize after a short delay to ensure the DOM is fully loaded
+    setTimeout(initSingleScrollCalendar, 100);
 });
 
 /**
- * Initialize the scroll synchronization
+ * Initialize the single scroll calendar system
  */
-function initSynchronizedScrolling() {
+function initSingleScrollCalendar() {
     if (typeof CalendarManager === 'undefined') {
         console.error('CalendarManager not found');
         return;
     }
 
-    // Store original methods we need to extend
+    // Store original methods we need to override
     const originalCreateWorkerCalendars = CalendarManager.createWorkerCalendars;
     const originalChangeView = CalendarManager.changeView;
     const originalNavigateTo = CalendarManager.navigateTo;
     const originalRefreshCalendars = CalendarManager.refreshCalendars;
 
-    // Add setupSynchronizedScrolling method to CalendarManager
-    CalendarManager.setupSynchronizedScrolling = function() {
-        // Get all calendar containers
+    /**
+     * Modify the DOM to use a single scroll container
+     */
+    function setupSingleScrollContainer() {
+        const scrollContent = document.getElementById('scrollContent');
+        if (!scrollContent) return;
+        
+        // Get all the calendar containers
         const calendarContainers = document.querySelectorAll('.calendar-container');
+        if (calendarContainers.length <= 1) return;
         
-        if (calendarContainers.length <= 1) {
-            return; // No need to synchronize if there's only one or no calendars
-        }
-        
-        // Flag to prevent recursive scroll events
-        let isScrolling = false;
-        
-        // Remove any existing scroll events first to avoid duplicates
+        // Remove scroll capability from individual calendar containers
         calendarContainers.forEach(container => {
-            const newContainer = container.cloneNode(true);
-            container.parentNode.replaceChild(newContainer, container);
+            container.style.overflow = 'visible';
+            container.style.height = 'auto';
         });
         
-        // Get fresh references after DOM replacements
-        const freshContainers = document.querySelectorAll('.calendar-container');
+        // Make the scroll-content container scrollable
+        scrollContent.style.overflowY = 'auto';
+        scrollContent.style.overflowX = 'auto';
         
-        // Add scroll event listener to each container
-        freshContainers.forEach(container => {
-            container.addEventListener('scroll', function() {
-                // If we're already handling a scroll event, exit
-                if (isScrolling) return;
-                
-                // Set the flag
-                isScrolling = true;
-                
-                // Get current scroll position
-                const scrollTop = this.scrollTop;
-                
-                // Apply this scroll position to all other containers
-                freshContainers.forEach(otherContainer => {
-                    if (otherContainer !== this) {
-                        otherContainer.scrollTop = scrollTop;
-                    }
-                });
-                
-                // Reset the flag after a short timeout
-                setTimeout(() => {
-                    isScrolling = false;
-                }, 50);
+        // Ensure the scroll-container takes the full available height
+        const scrollContainer = document.querySelector('.scroll-container');
+        if (scrollContainer) {
+            scrollContainer.style.display = 'flex';
+            scrollContainer.style.flexDirection = 'column';
+        }
+        
+        // Fix the calendar heights
+        const calendarElements = document.querySelectorAll('.fc');
+        calendarElements.forEach(calendar => {
+            calendar.style.height = 'auto';
+        });
+        
+        // Ensure the calendar time grids render properly
+        const timeGrids = document.querySelectorAll('.fc-timegrid-body');
+        timeGrids.forEach(grid => {
+            grid.style.overflow = 'visible';
+        });
+        
+        // Fix position of calendar headers
+        const calendarHeaders = document.querySelectorAll('.fc-col-header');
+        calendarHeaders.forEach(header => {
+            header.style.position = 'sticky';
+            header.style.top = '0';
+            header.style.zIndex = '2';
+            header.style.backgroundColor = 'white';
+        });
+    }
+    
+    /**
+     * Apply CSS Grid layout to align all calendars
+     * This ensures events line up perfectly across calendars
+     */
+    function applyGridLayout() {
+        // Get all scroll elements (worker columns)
+        const scrollElements = document.querySelectorAll('.scroll-element');
+        const headerContainers = [];
+        const calendarBodies = [];
+        
+        // Separate headers and calendar bodies
+        scrollElements.forEach(element => {
+            const header = element.querySelector('.element-content');
+            const calendarContainer = element.querySelector('.calendar-container');
+            
+            if (header) headerContainers.push(header);
+            if (calendarContainer) calendarBodies.push(calendarContainer);
+            
+            // Remove height constraint on the calendar container
+            if (calendarContainer) {
+                calendarContainer.style.flex = '0 0 auto';
+            }
+        });
+        
+        // Ensure all worker headers have the same height
+        const maxHeaderHeight = Math.max(...Array.from(headerContainers).map(h => h.offsetHeight));
+        headerContainers.forEach(header => {
+            header.style.height = `${maxHeaderHeight}px`;
+        });
+        
+        // Find all time slots in all calendars
+        const calendars = document.querySelectorAll('.fc');
+        calendars.forEach(calendar => {
+            // Make sure all time slots have the same height
+            const timeSlots = calendar.querySelectorAll('.fc-timegrid-slot');
+            timeSlots.forEach(slot => {
+                slot.style.height = '3em'; // Consistent height for all time slots
             });
         });
-    };
-
-    // Override createWorkerCalendars to set up scrolling
+    }
+    
+    // Override the createWorkerCalendars method
     CalendarManager.createWorkerCalendars = function() {
-        // Call the original function
+        // Call the original function to create calendars
         originalCreateWorkerCalendars.call(this);
         
-        // Set up synchronized scrolling after calendars are created
+        // Setup single scroll container
         setTimeout(() => {
-            this.setupSynchronizedScrolling();
-        }, 100);
+            setupSingleScrollContainer();
+            applyGridLayout();
+        }, 50);
     };
-
-    // Override changeView to maintain scroll synchronization
+    
+    // Override the changeView method
     CalendarManager.changeView = function(viewName) {
-        // Call the original changeView function
+        // Call the original function
         originalChangeView.call(this, viewName);
         
-        // Reset scroll synchronization after view change
+        // Re-apply single scroll container
         setTimeout(() => {
-            this.setupSynchronizedScrolling();
-        }, 100);
+            setupSingleScrollContainer();
+            applyGridLayout();
+        }, 50);
     };
-
-    // Override navigateTo to maintain scroll synchronization
+    
+    // Override the navigateTo method
     CalendarManager.navigateTo = function(direction) {
-        // Call the original navigateTo function
+        // Call the original function
         originalNavigateTo.call(this, direction);
         
-        // Reset scroll synchronization after navigation
+        // Re-apply single scroll container
         setTimeout(() => {
-            this.setupSynchronizedScrolling();
-        }, 100);
+            setupSingleScrollContainer();
+            applyGridLayout();
+        }, 50);
     };
-
-    // Override refreshCalendars to maintain scroll synchronization
+    
+    // Override the refreshCalendars method
     CalendarManager.refreshCalendars = function() {
-        // Call the original refreshCalendars function
+        // Call the original function
         originalRefreshCalendars.call(this);
         
-        // Reset scroll synchronization after refresh
+        // Re-apply single scroll container
         setTimeout(() => {
-            this.setupSynchronizedScrolling();
-        }, 100);
+            setupSingleScrollContainer();
+            applyGridLayout();
+        }, 50);
     };
-
-    // Add window resize handler for scroll synchronization
-    window.addEventListener('resize', function() {
-        // If resizing might affect calendar layout, re-setup scroll sync
-        if (CalendarManager.calendarInstances.length > 0) {
-            CalendarManager.setupSynchronizedScrolling();
-        }
-    });
-
-    // Initialize scroll synchronization if calendars already exist
+    
+    // Apply the single scroll container now if calendars already exist
     if (CalendarManager.calendarInstances.length > 0) {
-        CalendarManager.setupSynchronizedScrolling();
+        setupSingleScrollContainer();
+        applyGridLayout();
     }
+    
+    // Add window resize handler
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        if (resizeTimeout) clearTimeout(resizeTimeout);
+        
+        resizeTimeout = setTimeout(() => {
+            if (CalendarManager.calendarInstances.length > 0) {
+                setupSingleScrollContainer();
+                applyGridLayout();
+            }
+        }, 150);
+    });
 }

@@ -3,35 +3,106 @@
  * Styles for synchronized vertical scrolling
  */
 
-/* Enable vertical scrolling in calendar containers */
+/* Main scroll container - make this the only scrollable element */
+.scroll-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 50px); /* Adjust based on your top section height */
+    overflow: hidden;
+}
+
+/* Horizontal scroll for worker calendars */
+.scroll-content {
+    display: flex;
+    min-height: 100%;
+    overflow-y: auto !important; /* This is the primary scroll now */
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    will-change: scroll-position; /* Optimize for scrolling */
+}
+
+/* Worker column */
+.scroll-element {
+    flex: 0 0 90%;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-color);
+}
+
+/* Worker header - make it sticky */
+.element-content {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Calendar container - no scrolling here */
 .calendar-container {
     flex: 1;
-    overflow-y: auto !important;
-    overflow-x: hidden;
+    overflow: visible !important; /* Important: disable scrolling */
     padding: 0;
     background-color: #fff;
-    scroll-behavior: smooth;
 }
 
-/* Ensure fullcalendar view doesn't get cut off */
-.fc-view-harness {
-    min-height: 600px;
+/* FullCalendar specific overrides */
+.fc {
+    height: auto !important; /* Let it expand naturally */
 }
 
-/* Style scrollbars for better visibility */
-.calendar-container::-webkit-scrollbar {
-    width: 8px;
+.fc-timegrid-body {
+    overflow: visible !important; /* Disable individual scrolling */
 }
 
-.calendar-container::-webkit-scrollbar-track {
+.fc-timegrid-slots {
+    overflow: visible !important;
+}
+
+.fc-timegrid-slot {
+    height: 3em !important; /* Fixed height for time slots */
+}
+
+.fc-col-header {
+    position: sticky !important;
+    top: 50px !important; /* Match height of worker header */
+    z-index: 5;
+    background-color: white;
+}
+
+/* Improved scrollbar styling */
+.scroll-content::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.scroll-content::-webkit-scrollbar-track {
     background: #f1f1f1;
+    border-radius: 4px;
 }
 
-.calendar-container::-webkit-scrollbar-thumb {
+.scroll-content::-webkit-scrollbar-thumb {
     background: #888;
     border-radius: 4px;
 }
 
-.calendar-container::-webkit-scrollbar-thumb:hover {
+.scroll-content::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+/* Hardware acceleration for smoother scrolling */
+.scroll-content {
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    transform: translateZ(0); /* Trigger hardware acceleration */
+}
+
+/* Time slots consistency */
+.fc-timegrid-slots table {
+    width: 100% !important;
 }
