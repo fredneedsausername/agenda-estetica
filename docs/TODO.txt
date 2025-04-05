@@ -12,3 +12,15 @@
 - aggiungi crash log ad agenda
 - metti un limite configurabile al numero di messaggi che si possono mandare per giornata, per evitare di mandarne 5000 per un bug e spendere centinaia di euro, e fai che ti arriva una email se questo limite viene raggiunto
 - Fai il download di flatpickr e fullcalendar invece di usare cdn
+
+Criticità con demo agenda centro estetico
+
+- Il prezzo dovrebe poter pure essere pari a zero, ma attualmente non è così
+- Quando metti gli appuntamenti, all'inizio, ti arrotonda l'orario alla mezz'ora più vicina. Molto strano
+- Sperimenta con l'aumentare la dimensione del font
+- centra il bottone più per migliore usabilità
+- blocca la possibilità di avere appuntamenti che si sovrappongono per un cliente
+- trova dove aggiungere menù per selezionare operatori
+- scroll verticale per i calendari degli operatori, possibilmente contemporanei per tutti
+- capisci dove viene chiesta la favicon, e cambiala con assets/img/favicon.png
+- Fai sì che il range di orari sia più grosso
