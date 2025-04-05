@@ -15,7 +15,10 @@
 
 Criticità con demo agenda centro estetico
 
-- Il prezzo dovrebe poter pure essere pari a zero, ma attualmente non è così
+- gli appuntamenti mostrati si aggiornano solo quando si ricarica la pagina, ma si dovrebbero aggiornare in molte più situazioni
+- quando clicco su un appuntamento non mi apre un menù per modificarlo, ma me lo dovrebbe aprire
+- nell'appuntamento è specificata la durata, ma questo non accadrà mai
+- vorrei poter cliccare sul calendario stesso per aggiungere un appuntamento in quel time slot
 - Quando metti gli appuntamenti, all'inizio, ti arrotonda l'orario alla mezz'ora più vicina. Molto strano
 - Sperimenta con l'aumentare la dimensione del font
 - centra il bottone più per migliore usabilità

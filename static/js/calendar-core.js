@@ -517,7 +517,7 @@ const CalendarManager = {
             return false;
         }
         
-        if (!price || isNaN(price) || parseFloat(price) <= 0) {
+        if (!price || isNaN(price) || parseFloat(price) < 0) {
             alert('Inserisci un prezzo valido');
             return false;
         }
